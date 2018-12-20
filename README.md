@@ -1,2 +1,2 @@
 # Folder-Locker
-It locks the folder. (Right now its just hiding)
+It locks the folder. (Right now it's just hiding)
