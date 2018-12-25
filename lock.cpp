@@ -4,6 +4,48 @@
 #include <windows.h>    // can learn about all function at microsoft windows docs
 using namespace std;
 
+void setcolor();
+int lockFolder();
+int unlockFolder();
+
+int main()
+{
+    int ch=0;
+    SetConsoleTitle("Folder Lock");
+    system("CLS"); 
+    label:
+    setColor(11);
+    cout<<"\t\tFolder Lock :";
+    cout << "\n\n" << "Options:\t\t\t\n";
+    cout << "\t======================\n";
+    cout << "\t1. - Lock Folder.\n";
+    cout << "\t2. - Unlock Folder.\n";
+    cout << "\t3. - Exit.\n";
+    cout << "\t======================  \n";
+
+    setColor(4);
+    cout << "\nEnter your choice: ";
+    cin >> ch;
+    int run;
+    switch (ch)
+    {
+    case 1:
+        lockFolder(); 
+        break;
+    case 2:
+        run=unlockFolder();
+        if(run==1)
+        goto label;
+        break;
+    case 3: exit(0); break;
+    default: cout << "\nInvalid Entry. Quitting ....\n";
+    }
+    cout<<"\nPress any key to exit\n";
+    getch();
+    setColor(7);
+    return 0;
+}
+
 void setColor(unsigned int colour)
 {
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -67,45 +109,4 @@ int unlockFolder()
     if(!(r==1))
     cout << "\n\n" << tempfolder << " has been unlocked successfully!\n";
     return r;
-}
-
-
-
-int main()
-{
-    int ch=0;
-    SetConsoleTitle("Folder Lock");
-    abc:
-    system("CLS"); 
-    label:
-    setColor(11);
-    cout<<"\t\tFolder Lock :";
-    cout << "\n\n" << "Options:\t\t\t\n";
-    cout << "\t======================\n";
-    cout << "\t1. - Lock Folder.\n";
-    cout << "\t2. - Unlock Folder.\n";
-    cout << "\t3. - Exit.\n";
-    cout << "\t======================  \n";
-
-    setColor(4);
-    cout << "\nEnter your choice: ";
-    cin >> ch;
-    int run;
-    switch (ch)
-    {
-    case 1:
-        lockFolder(); 
-        break;
-    case 2:
-        run=unlockFolder();
-        if(run==1)
-        goto label;
-        break;
-    case 3: exit(0); break;
-    default: cout << "\nInvalid Entry. Quitting ....\n";
-    }
-    cout<<"\nPress any key to exit\n";
-    getch();
-    setColor(7);
-    return 0;
 }
