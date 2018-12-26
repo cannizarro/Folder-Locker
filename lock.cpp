@@ -4,7 +4,7 @@
 #include <windows.h>    // can learn about all function at microsoft windows docs
 using namespace std;
 
-void setcolor();
+void setColor();
 int lockFolder();
 int unlockFolder();
 
@@ -46,7 +46,7 @@ int main()
     return 0;
 }
 
-void setColor(unsigned int colour)
+void setColor(int colour)
 {
     HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(handle, colour);
