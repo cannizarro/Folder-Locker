@@ -4,7 +4,7 @@
 #include <windows.h>    // can learn about all function at microsoft windows docs
 using namespace std;
 
-void setColor();
+void setColor(int color);
 int lockFolder();
 int unlockFolder();
 
@@ -37,7 +37,7 @@ int main()
         if(run==1)
         goto label;
         break;
-    case 3: exit(0); break;
+    case 3:setColor(7); exit(0);
     default: cout << "\nInvalid Entry. Quitting ....\n";
     }
     cout<<"\nPress any key to exit\n";
@@ -55,13 +55,24 @@ void setColor(int colour)
 int lockFolder()
 {
     ofstream sfolder;
-    char folder[200]={0}; 
-    char tempfolder[200]={'0'};
-    char attrib[200]={'0'};
+    char pass[200];
+    char folder[200]; 
+    char tempfolder[200];
+    char attrib[200];
     setColor(10);
     
+    system("if exist password.txt del password.txt");//deleting if any old files are present
+
     cout << "\nEnter the complete path to the Folder: ";
     cin >> folder;
+
+    cout<<"Enter password : ";
+    cin>>pass;
+
+        system("dir>password.txt");
+        sfolder.open("password.txt",ios::out);
+        sfolder<<pass;
+        //system("attrib +h password.txt");
 
     strcpy(tempfolder, folder);
 
@@ -85,23 +96,43 @@ int lockFolder()
 
 int unlockFolder()
 {
-    char folder[200]; 
+    ifstream sfolder;
+    char folder[200];
+    char pass[200];
+    char passComp[200];
     char tempfolder[200];
     char attrib[200];
     char del[200];
+    int r=1;
 
     setColor(13);
     
-    cout << "\nEnter the path of the Folder you want to protect : ";
+    cout << "\nEnter the path of the Folder you want to unlock : ";
     cin >> folder;
+
+    cout<<"Enter the password : \n";
+    cin>>pass;
+
+    sfolder.open("password.txt",ios::in);
+    sfolder>>passComp;
+
+    if(strcmp(passComp,pass))
+    {
+        cout<<"Password is incorrect\n";
+        return r;
+
+    }
+
 
     strcpy(tempfolder, folder);
 
     strcat(folder, "\\Desktop.ini");
 
-    strcpy(del, "del ");
+    strcpy(del, "if exist ");
     strcat(del, folder);
-    int r=system(del);
+    strcat(del, "del ");
+    strcat(del,folder);
+    r=system(del);
     strcpy(attrib, "attrib -h -s ");
     strcat(attrib, tempfolder);
     
