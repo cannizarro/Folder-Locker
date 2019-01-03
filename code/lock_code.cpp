@@ -72,7 +72,7 @@ int lockFolder()
         system("dir>password.txt");
         sfolder.open("password.txt",ios::out);
         sfolder<<pass;
-        system("attrib +h +s password.txt");
+        system("attrib +h password.txt");
 
     strcpy(tempfolder, folder);
 
