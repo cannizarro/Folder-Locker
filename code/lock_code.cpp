@@ -5,13 +5,13 @@
 using namespace std;
 
 void setColor(int color);
-int lockFolder();
-int unlockFolder();
+void lockFolder();
+void unlockFolder();
 
 int main()
 {
     int ch=0;
-    SetConsoleTitle("Folder Lock");
+    SetConsoleTitle("\n\nFolder Lock");
     system("CLS"); 
     label:
     setColor(11);
@@ -30,15 +30,19 @@ int main()
     switch (ch)
     {
     case 1:
-        lockFolder(); 
-        break;
-    case 2:
-        run=unlockFolder();
-        if(run==1)
+        lockFolder();
         goto label;
         break;
-    case 3:setColor(7); exit(0);
-    default: cout << "\nInvalid Entry. Quitting ....\n";
+    case 2:
+        unlockFolder();
+        goto label;
+        break;
+    case 3:
+        setColor(7);
+        exit(0);
+    default: 
+        cout << "\nInvalid Entry.....\n";
+        goto label;
     }
     cout<<"\nPress any key to exit\n";
     getch();
@@ -52,7 +56,7 @@ void setColor(int colour)
     SetConsoleTextAttribute(handle, colour);
 }
 
-int lockFolder()
+void lockFolder()
 {
     ofstream sfolder;
     char pass[200];
@@ -61,20 +65,21 @@ int lockFolder()
     char attrib[200];
     setColor(10);
     
-    system("if exist password.txt del password.txt");//deleting if any old files are present
-
+    fflush(stdin);
     cout << "\nEnter the complete path to the Folder: ";
-    cin >> folder;
+    cin.getline(folder,200);
 
     cout<<"Enter password : ";
     cin>>pass;
 
-        system("dir>password.txt");
-        sfolder.open("password.txt",ios::out);
-        sfolder<<pass;
-        system("attrib +h password.txt");
+   
+    //system("attrib +s password.txt");
 
-    strcpy(tempfolder, folder);
+    strcpy(tempfolder,"\"");
+
+    strcat(tempfolder, folder);
+
+    strcat(tempfolder,"\"");
 
     strcat(folder, "\\Desktop.ini");
     
@@ -84,17 +89,20 @@ int lockFolder()
     sfolder << "CLSID = {63E23168-BFF7-4E87-A246-EF024425E4EC}" << endl;
 
     sfolder.close();
-
     strcpy(attrib, "attrib +h +s ");
     strcat(attrib, tempfolder);
-    
     WinExec(attrib, 11); //can also use system() but using WinExec() just for information sake.
+
+    system("if exist password.txt del password.txt");//deleting if any old files are present
+    system("dir>password.txt");
+    sfolder.open("password.txt",ios::out);
+    sfolder<<pass;
     
 
     cout << "\n\n" << tempfolder << " has been locked successfully!\n";
 }
 
-int unlockFolder()
+void unlockFolder()
 {
     ifstream sfolder;
     char folder[200];
@@ -103,12 +111,11 @@ int unlockFolder()
     char tempfolder[200];
     char attrib[200];
     char del[200];
-    int r=1;
 
     setColor(13);
-    
+    fflush(stdin);
     cout << "\nEnter the path of the Folder you want to unlock : ";
-    cin >> folder;
+    cin.getline(folder,200);
 
     cout<<"Enter the password : \n";
     cin>>pass;
@@ -119,12 +126,12 @@ int unlockFolder()
     if(strcmp(passComp,pass))
     {
         cout<<"Password is incorrect\n";
-        return r;
-
+        return;
     }
 
-
-    strcpy(tempfolder, folder);
+    strcpy(tempfolder,"\"");
+    strcat(tempfolder, folder);
+    strcat(tempfolder,"\"");
 
     strcat(folder, "\\Desktop.ini");
 
@@ -132,12 +139,10 @@ int unlockFolder()
     strcat(del, folder);
     strcat(del, "del ");
     strcat(del,folder);
-    r=system(del);
+    system(del);
     strcpy(attrib, "attrib -h -s ");
     strcat(attrib, tempfolder);
     
     system(attrib);  // same as above can use WinExec() but used this for simplicity
-    if(!(r==1))
     cout << "\n\n" << tempfolder << " has been unlocked successfully!\n";
-    return r;
 }
