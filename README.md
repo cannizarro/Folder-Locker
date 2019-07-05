@@ -1,6 +1,7 @@
 # Folder-Locker
-It locks a folder when you enter the path to it .
-This is my first project in cpp for that matter c (as I didn't use any OOP concept).
+(Download the executable file)[https://github.com/cannizarro/Folder-Locker/raw/master/lock.exe].
+
+This is my first project in C++ for that matter C (as I didn't used any OOP concept).
 It uses various built in libraries and dos commands that cpp contain for manipulating the visual behaviour of windows explorer for showing or hiding elements.
 
 It works simply by specifying the folder under certain classes present in windows by manipulating with CLSID present in Desktop.ini file which is present in every folder in windows.
