@@ -1,5 +1,5 @@
 # Folder-Locker
-(Download the executable file)[https://github.com/cannizarro/Folder-Locker/raw/master/lock.exe].
+[Download the executable file](https://github.com/cannizarro/Folder-Locker/raw/master/lock.exe).
 
 This is my first project in C++ for that matter C (as I didn't used any OOP concept).
 It uses various built in libraries and dos commands that cpp contain for manipulating the visual behaviour of windows explorer for showing or hiding elements.
